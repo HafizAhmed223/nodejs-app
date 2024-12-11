@@ -1,6 +1,6 @@
 name: Deploy Node Application
 
-on: 
+on:
   push:
     branches:
       - mern-ec2-docker
@@ -12,19 +12,18 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
       - name: Login to docker hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}     
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker Image
-        run: docker build -t integrationninjas/nodejs-app  .
+        run: docker build -t hafizahmedwaseem/nodejs-app .
       - name: Publish Image to docker hub
-        run: docker push integrationninjas/nodejs-app:latest 
- 
+        run: docker push hafizahmedwaseem/nodejs-app:latest
+
   deploy:
     needs: build
-    runs-on: self-hosted 
-    steps:
+    runs-on: self-hosted
+    steps: 
       - name: Pull image from docker hub
-        run: docker pull integrationninjas/nodejs-app:latest 
-      - name: Delete old container
-        run: docker rm -f nodejs-app-container  
+        run: docker pull hafizahmedwaseem/nodejs-app:latest
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' integrationninjas/nodejs-app
+        run: docker run -p 4000:4000 --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' hafizahmedwaseem/nodejs-app
+
