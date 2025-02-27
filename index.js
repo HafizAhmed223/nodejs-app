@@ -13,7 +13,7 @@ app.use((_req, res, next) => {
   next();
 });
 
-// Middleware to parse JSON and URL encoded data
+// Middleware to parse JSON and URL encoded Data
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
